@@ -1,8 +1,9 @@
 from flask import Blueprint, request
 from .models import User
-from .extensions import db
+from .extensions import db, login_manager
 from sqlalchemy.exc import IntegrityError
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
+from flask_login import LoginManager, login_required, current_user, login_user
 import re
 
 bp = Blueprint("main", __name__)
@@ -10,7 +11,30 @@ bp = Blueprint("main", __name__)
 #endpoint for handling login
 @bp.post("/login")
 def login():
-    pass
+    if request.method == "POST":
+        data = request.get_json()
+
+        email = (data.get("email") or "").strip()
+        password = data.get("password") or ""
+
+        if not email:
+            return {"message": "Email is required"}
+        
+        if not password:
+            return {"message": "Password is required"}
+        
+        #Get the user from the database
+        user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
+        if not user or not check_password_hash(user.password, password):
+            return {"message": f"Invalid email or password {email}"}
+        else:
+            login_user(user)
+            return {"message": f"User {user.name} logged in"}
+
+@login_manager.user_loader
+def load_user(user_id):
+    # Return the User object corresponding to the user ID
+    return User.query.get(int(user_id))
 
 #endpoint for handling resgistraion
 @bp.post("/register")

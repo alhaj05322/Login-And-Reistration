@@ -1,9 +1,10 @@
 from .extensions import db
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from flask_login import UserMixin
 from sqlalchemy import String
 
 
-class Base(DeclarativeBase):
+class Base(DeclarativeBase, UserMixin):
     pass
 
 class User(Base):
