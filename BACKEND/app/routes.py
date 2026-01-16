@@ -1,9 +1,9 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, flash
 from .models import User
 from .extensions import db, login_manager
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import LoginManager, login_required, current_user, login_user
+from flask_login import LoginManager, login_required, current_user, login_user, logout_user
 import re
 
 bp = Blueprint("main", __name__)
@@ -34,7 +34,7 @@ def login():
 @login_manager.user_loader
 def load_user(user_id):
     # Return the User object corresponding to the user ID
-    return User.query.get(int(user_id))
+    return db.get_or_404(User, user_id)
 
 #endpoint for handling resgistraion
 @bp.post("/register")
@@ -72,4 +72,10 @@ def register():
         except IntegrityError:
             db.session.rollback()
             return {"message": "Username or email is already registered"}
+@bp.post("/logout")
+@login_required # Ensures only logged-in users can access logout
+def logout():
+    logout_user()
+    return {"message": "Logout successful"}
+    
     
