@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Bootstrap 5 -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(270deg, #667eea, #764ba2, #6a11cb);
+        background-size: 600% 600%;
+        animation: gradientMove 12s ease infinite;
+      }
+
+      @keyframes gradientMove {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .login-card {
+        background: rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(12px);
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        animation: fadeUp 1s ease;
+      }
+
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .login-card h3 {
+        text-align: center;
+        font-weight: 600;
+        color: #fff;
+        margin-bottom: 30px;
+      }
+
+      .form-control {
+        background: rgba(255, 255, 255, 0.2);
+        border: none;
+        color: #fff;
+        height: 48px;
+      }
+
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .form-control:focus {
+        box-shadow: none;
+        background: rgba(255, 255, 255, 0.3);
+        color: #fff;
+      }
+
+      .btn-login {
+        background: #fff;
+        color: #6a11cb;
+        font-weight: 600;
+        height: 48px;
+        transition: all 0.3s ease;
+      }
+
+      .btn-login:hover {
+        background: #6a11cb;
+        color: #fff;
+        transform: translateY(-3px);
+      }
+
+      .login-links {
+        text-align: center;
+        margin-top: 15px;
+      }
+
+      .login-links a {
+        color: #fff;
+        text-decoration: none;
+        font-size: 0.9rem;
+      }
+
+      .login-links a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-card">
+      <h3>Welcome Back</h3>
+
+      <form>
+        <div class="mb-3">
+          <input
+            type="email"
+            class="form-control"
+            placeholder="Email Address"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <input
+            type="password"
+            class="form-control"
+            placeholder="Password"
+            required
+          />
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-login">Login</button>
+        </div>
+
+        <div class="login-links">
+          <!-- Back Button -->
+          <a routerLink="/home" role="button" class="back-btn"> ← Home Page </a>
+        </div>
+      </form>
+    </div>
+  </body>
+</html>
