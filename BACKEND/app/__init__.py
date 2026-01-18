@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from .config import Config
 from .extensions import db, login_manager
 import os
@@ -13,6 +14,8 @@ def create_app(config_class: type = Config):
     os.makedirs(app.instance_path,exist_ok=True)
     db.init_app(app)
     login_manager.init_app(app)
+     # Configure CORS to allow requests from your Angular frontend
+    CORS(app)
 
     @app.get("/")
     def home():
