@@ -122,27 +122,59 @@
     <div class="login-card">
       <h3>Welcome Back</h3>
 
-      <form>
+      <form [formGroup]="userForm">
         <div class="mb-3">
           <input
+            formControlName="email"
             type="email"
             class="form-control"
             placeholder="Email Address"
             required
           />
+          <div
+            *ngIf="
+              userForm.get('email')?.invalid &&
+              (userForm.get('email')?.dirty || userForm.get('email')?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="userForm.get('email')?.hasError('required')">
+              <div class="text-danger">Email is required.</div>
+            </div>
+            <div *ngIf="userForm.get('email')?.hasError('email')">
+              <div class="text-danger">Enter a valid email address.</div>
+            </div>
+          </div>
         </div>
 
         <div class="mb-3">
           <input
+            formControlName="password"
             type="password"
             class="form-control"
             placeholder="Password"
             required
           />
+          <div
+            *ngIf="
+              userForm.get('password')?.invalid &&
+              (userForm.get('password')?.dirty ||
+                userForm.get('password')?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="userForm.get('password')?.hasError('required')">
+              <div class="text-danger">Password is required.</div>
+            </div>
+            <div *ngIf="userForm.get('password')?.hasError('minlength')">
+              <div class="text-danger">Password must be at least 8 characters long.</div>
+            </div>
+            
+          </div>
         </div>
 
         <div class="d-grid">
-          <button type="submit" class="btn btn-login">Login</button>
+          <button (click)="onLogin()" type="submit" class="btn btn-login">Login</button>
         </div>
 
         <div class="login-links">

@@ -18,18 +18,18 @@ def login():
         password = data.get("password") or ""
 
         if not email:
-            return {"message": "Email is required"}
+            return {"success": False,"message": "Email is required"}
         
         if not password:
-            return {"message": "Password is required"}
+            return {"success": False,"message": "Password is required"}
         
         #Get the user from the database
         user = db.session.execute(db.select(User).filter_by(email=email)).scalar_one()
         if not user or not check_password_hash(user.password, password):
-            return {"message": f"Invalid email or password {email}"}
+            return {"success": False,"message": f"Invalid email or password {email}"}
         else:
             login_user(user)
-            return {"message": f"User {user.name} logged in"}
+            return {"success": True,"message": f"User {user.name} logged in"}
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -49,14 +49,14 @@ def register():
        
         #Set username to be between 3 to 80 chars
         if not (3 <= len(name) <= 80):
-            return {"message": "User name must be between 3 and 80 chars"}
+            return {"success": False, "message": "User name must be between 3 and 80 chars"}
 
         #Check if user entered a valid email
         if not re.match(r"^[^@\s]+@[^@\s]+\.[^@\s]+$", email):
-            return {"message": "Invalid email"}
+            return {"success": False,"message": "Invalid email"}
         #Check if user entered a valid passord
-        if len(password) < 6:
-            return {"message": "Passord need to be atleast 6 chars"}
+        if len(password) < 8:
+            return {"success": False,"message": "Passord need to be atleast 6 chars"}
 
         #Check if passord and confirm passord are matched
         if password != confirm:
@@ -68,14 +68,14 @@ def register():
             user = User(name=name, email=email, password=pass_hash)
             db.session.add(user)
             db.session.commit()
-            return {"message": f"user {name} is added to the database"}
+            return {"success": True,"message": f"user {name} is added to the database"}
         except IntegrityError:
             db.session.rollback()
-            return {"message": "Username or email is already registered"}
+            return {"success": False,"message": "Username or email is already registered"}
 @bp.post("/logout")
 @login_required # Ensures only logged-in users can access logout
 def logout():
     logout_user()
-    return {"message": "Logout successful"}
+    return {"success": True,"message": "Logout successful"}
     
     
