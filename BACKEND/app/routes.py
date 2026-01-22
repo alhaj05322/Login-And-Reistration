@@ -69,9 +69,10 @@ def register():
             db.session.add(user)
             db.session.commit()
             return {"success": True,"message": f"user {name} is added to the database"}
-        except IntegrityError:
+        except Exception as e:
             db.session.rollback()
-            return {"success": False,"message": "Username or email is already registered"}
+            print(f"An error occurred during registration: {e}")
+            flash("An unexpected error occurred. Please try again later.", "danger")
 @bp.post("/logout")
 @login_required # Ensures only logged-in users can access logout
 def logout():
