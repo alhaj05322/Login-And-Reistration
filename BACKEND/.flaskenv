@@ -1,5 +1,5 @@
 FLASK_APP=app:create_app
-FLASK_ENV=development
+FLASK_ENV=production
 FLASK_DEBUG=1
 FLASK_RUN_POST=127.0.0.1
 FLASK_RUN_PORT=5001
