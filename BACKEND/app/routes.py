@@ -1,4 +1,5 @@
-from flask import Blueprint, request, flash
+from flask import Blueprint, jsonify, request, flash
+from flask_cors import cross_origin
 from .models import User
 from .extensions import db, login_manager
 from sqlalchemy.exc import IntegrityError
@@ -28,7 +29,7 @@ def login():
         if not user or not check_password_hash(user.password, password):
             return {"success": False,"message": f"Invalid email or password {email}"}
         else:
-            login_user(user)
+            login_user(user, remember=True)
             return {"success": True,"message": f"User {user.name} logged in"}
 
 @login_manager.user_loader
@@ -73,10 +74,22 @@ def register():
             db.session.rollback()
             print(f"An error occurred during registration: {e}")
             flash("An unexpected error occurred. Please try again later.", "danger")
-@bp.post("/logout")
+
 @login_required # Ensures only logged-in users can access logout
+@cross_origin(supports_credentials=True)
+@bp.post("/logout")
 def logout():
+    
     logout_user()
-    return {"success": True,"message": "Logout successful"}
+    return jsonify({"success": True, "message": "Logged out"}), 200
+        
+   
+    
+@bp.get("/get_user")
+def get_user():
+    if current_user.is_authenticated:
+        return {"success": True, "message": str(current_user)}
+    else:
+        return {"success": False, "message": "Unable to load user name"}
     
     

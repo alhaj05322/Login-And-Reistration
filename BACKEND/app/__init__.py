@@ -13,9 +13,16 @@ def create_app(config_class: type = Config):
      #create the instnce folder
     os.makedirs(app.instance_path,exist_ok=True)
     db.init_app(app)
+    #If user not logged in redirect to login page
+    login_manager.login_view="login"
     login_manager.init_app(app)
-     # Configure CORS to allow requests from your Angular frontend
-    CORS(app)
+    # Configure Flask-CORS for a specific origin with credential support
+    CORS(
+        app,
+        supports_credentials=True
+        
+    )
+
 
     @app.get("/")
     def home():

@@ -158,8 +158,7 @@
           <div
             *ngIf="
               userData.get('name')?.invalid &&
-              (userData.get('name')?.dirty ||
-                userData.get('name')?.touched)
+              (userData.get('name')?.dirty || userData.get('name')?.touched)
             "
             class="error-message"
           >
@@ -167,12 +166,12 @@
               <div class="text-danger">name is required.</div>
             </div>
             <div *ngIf="userData.get('name')?.hasError('minlength')">
-              <div class="text-danger">name must be at least 3 characters long.</div>
+              <div class="text-danger">
+                name must be at least 3 characters long.
+              </div>
             </div>
-            
           </div>
         </div>
-        
 
         <div class="mb-3">
           <input
@@ -183,21 +182,20 @@
             required
           />
           <div
-          *ngIf="
-            userData.get('email')?.invalid &&
-            (userData.get('email')?.dirty || userData.get('email')?.touched)
-          "
-          class="error-message"
-        >
-          <div *ngIf="userData.get('email')?.hasError('required')">
-            <div class="text-danger">Email is required.</div>
-          </div>
-          <div *ngIf="userData.get('email')?.hasError('email')">
-            <div class="text-danger">Enter a valid email address.</div>
+            *ngIf="
+              userData.get('email')?.invalid &&
+              (userData.get('email')?.dirty || userData.get('email')?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="userData.get('email')?.hasError('required')">
+              <div class="text-danger">Email is required.</div>
+            </div>
+            <div *ngIf="userData.get('email')?.hasError('email')">
+              <div class="text-danger">Enter a valid email address.</div>
+            </div>
           </div>
         </div>
-        </div>
-        
 
         <div class="mb-3">
           <input
@@ -208,24 +206,23 @@
             required
           />
           <div
-          *ngIf="
-            userData.get('password')?.invalid &&
-            (userData.get('password')?.dirty ||
-              userData.get('password')?.touched)
-          "
-          class="error-message"
-        >
-          <div *ngIf="userData.get('password')?.hasError('required')">
-            <div class="text-danger">Password is required.</div>
-          </div>
-          <div *ngIf="userData.get('password')?.hasError('minlength')">
-            <div class="text-danger">
-              Password must be at least 8 characters long.
+            *ngIf="
+              userData.get('password')?.invalid &&
+              (userData.get('password')?.dirty ||
+                userData.get('password')?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="userData.get('password')?.hasError('required')">
+              <div class="text-danger">Password is required.</div>
+            </div>
+            <div *ngIf="userData.get('password')?.hasError('minlength')">
+              <div class="text-danger">
+                Password must be at least 8 characters long.
+              </div>
             </div>
           </div>
         </div>
-        </div>
-        
 
         <div class="mb-3">
           <input
@@ -236,24 +233,23 @@
             required
           />
           <div
-          *ngIf="
-            userData.get('password')?.invalid &&
-            (userData.get('password')?.dirty ||
-              userData.get('password')?.touched)
-          "
-          class="error-message"
-        >
-          <div *ngIf="userData.get('password')?.hasError('required')">
-            <div class="text-danger">Password is required.</div>
-          </div>
-          <div *ngIf="userData.get('password')?.hasError('minlength')">
-            <div class="text-danger">
-              Password must be at least 8 characters long.
+            *ngIf="
+              userData.get('password')?.invalid &&
+              (userData.get('password')?.dirty ||
+                userData.get('password')?.touched)
+            "
+            class="error-message"
+          >
+            <div *ngIf="userData.get('password')?.hasError('required')">
+              <div class="text-danger">Password is required.</div>
+            </div>
+            <div *ngIf="userData.get('password')?.hasError('minlength')">
+              <div class="text-danger">
+                Password must be at least 8 characters long.
+              </div>
             </div>
           </div>
         </div>
-        </div>
-        
 
         <div class="d-grid">
           <button (click)="onSave()" type="submit" class="btn btn-register">

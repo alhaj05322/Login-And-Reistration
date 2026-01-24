@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import {Router, RouterModule } from "@angular/router";
+import { RegisterService } from '../../services/register.service';
 
 @Component({
   selector: 'app-registration',
@@ -22,10 +23,11 @@ export class RegistrationComponent {
 
   http = inject(HttpClient)
   router = inject(Router)
+  registerService = inject(RegisterService)
 
   onSave() {
     const data = this.userData.value
-    this.http.post("http://127.0.0.1:5001/register", data).subscribe((res: any)=>{
+    this.registerService.createUser(data).subscribe((res: any)=>{
       if(res.success){
         alert(res.message)
         this.router.navigate(['/login'])

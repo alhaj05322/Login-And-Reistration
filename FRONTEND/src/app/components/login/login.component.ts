@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Inject, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { UserService } from '../../services/user.service';
 
 
 
@@ -21,13 +22,15 @@ export class LoginComponent {
 
   http = inject(HttpClient)
   router = inject(Router)
+  userService = inject(UserService)
+  
 
 
   constructor(){}
 
   onLogin(){
     const userData = this.userForm.value
-    this.http.post("http://127.0.0.1:5001/login", userData).subscribe((res:any)=>{
+    this.userService.auth(userData).subscribe((res:any)=>{
       if(res.success){
         alert(res.message)
         this.router.navigate(['/dashboard'])
